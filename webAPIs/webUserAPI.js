@@ -47,7 +47,6 @@ router.get("/listAllUsers", (req, res) => {
         res.send(errMsg);
       }
     });
-    res.end();
 });
 
 //get single user by id
@@ -57,20 +56,27 @@ router.get("/getUser/:id", (req, res) => {
   AND web_user.user_role_id = user_role.user_role_id;`;
 
   db.query(sqlGetId, (err, result) => {
-    if (result[0].membership_fee !== null) {
-      result[0].membership_fee = formatUtils.formatCurrency(
-        result[0].membership_fee
-      );
-    }
+    if (result) {
+      if (result[0].membership_fee !== null) {
+        result[0].membership_fee = formatUtils.formatCurrency(
+          result[0].membership_fee
+        );
+      }
 
-    if (result[0].birthday !== null) {
-      result[0].birthday = formatUtils.formatBday(result[0].birthday);
+      if (result[0].birthday !== null) {
+        result[0].birthday = formatUtils.formatBday(result[0].birthday);
+      }
+      res.send(result);
+    } else {
+      console.log(res.statusCode);
+      const errMsg = {
+        err: res.statusCode + "- " + res.statusMessage,
+      };
+      res.send(errMsg);
     }
-
-    res.send(result);
   });
-  res.end();
 });
+
 
 function formatUserObj(userObj) {
   if (userObj.birthday == "0000-00-00") {
