@@ -1,11 +1,11 @@
 //Imports dependecies being used
 const express = require("express");
-//const cors = require("cors");
+const cors = require("cors");
 
 
 //declares an express app
 const app = express();
-
+app.use(cors());
  
 //web user routing
 const webUserRoutes = require("./webAPIs/webUserAPI")

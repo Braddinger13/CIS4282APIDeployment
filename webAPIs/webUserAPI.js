@@ -21,7 +21,6 @@ router.use(express.urlencoded({ extended: false }));
 
 //get all user api
 router.get("/listAllUsers", (req, res) => {
-  //const sqlGet = "SELECT * FROM heroku_73fd5bf53ffabe9.web_user;";
   const sqlGet =
     "SELECT web_user_id, user_email, user_password, image, membership_fee, birthday, " +
     "web_user.user_role_id, user_role_type FROM web_user, user_role WHERE web_user.user_role_id = user_role.user_role_id " +
