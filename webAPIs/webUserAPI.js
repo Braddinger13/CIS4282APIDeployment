@@ -23,7 +23,7 @@ router.use(express.urlencoded({ extended: false }));
 router.get("/listAllUsers", (req, res) => {
   //const sqlGet = "SELECT * FROM heroku_73fd5bf53ffabe9.web_user;";
   const sqlGet =
-    "SELECT web_user_id, user_emailx, user_password, image, membership_fee, birthday, " +
+    "SELECT web_user_id, user_email, user_password, image, membership_fee, birthday, " +
     "web_user.user_role_id, user_role_type FROM web_user, user_role WHERE web_user.user_role_id = user_role.user_role_id " +
     "ORDER BY web_user_id";
 
@@ -47,6 +47,7 @@ router.get("/listAllUsers", (req, res) => {
         res.send(errMsg);
       }
     });
+    res.end();
 });
 
 //get single user by id
@@ -68,11 +69,8 @@ router.get("/getUser/:id", (req, res) => {
 
     res.send(result);
   });
+  res.end();
 });
-
-function ajax(resObj) {
-  console.log(resObj);
-}
 
 function formatUserObj(userObj) {
   if (userObj.birthday == "0000-00-00") {
