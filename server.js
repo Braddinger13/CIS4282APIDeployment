@@ -7,7 +7,7 @@ const app = express();
 
 const db = require("./dbUtils/DbConn");
 
-const webUserRoutes = require("./webAPIs/webUserAPI");
+const webUserRoutes = require("./webAPIs/webUserApi");
 app.use("/api", webUserRoutes);
 
 app.get("/", (req, res) => {
