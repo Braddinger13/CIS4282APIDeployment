@@ -10,48 +10,48 @@ router.use(express.json());
 router.use(express.urlencoded({ extended: false }));
 
 // get all user api 
-router.get("/listAllUsers", (req, res) => {
-    try {
-      const sqlGet = "SELECT web_user_id, user_email, user_password, image, membership_fee, birthday, web_user.user_role_id, role_type "
-      + " FROM web_user, user_role WHERE web_user.user_role_id = user_role.user_role_id ORDER BY web_user_id ASC";
-      db.query(sqlGet, (req, result) => {
-          var users = [];
-          for(var ele of result){
-              users.push(DbMods.formatWebUser(ele));
-          }
-          res.send(users);
-      });
-    } catch (error) {
-        console.log("ERROR DISPLAYING: " + error);
-    }
-  }); 
+// router.get("/listAllUsers", (req, res) => {
+//     try {
+//       const sqlGet = "SELECT web_user_id, user_email, user_password, image, membership_fee, birthday, web_user.user_role_id, role_type "
+//       + " FROM web_user, user_role WHERE web_user.user_role_id = user_role.user_role_id ORDER BY web_user_id ASC";
+//       db.query(sqlGet, (req, result) => {
+//           var users = [];
+//           for(var ele of result){
+//               users.push(DbMods.formatWebUser(ele));
+//           }
+//           res.send(users);
+//       });
+//     } catch (error) {
+//         console.log("ERROR DISPLAYING: " + error);
+//     }
+//   }); 
 
 //get all user api
-// router.get("/listAllUsers", (req, res) => {
-//   const sqlGet =
-//     "SELECT web_user_id, user_email, user_password, image, membership_fee, birthday, " +
-//     "web_user.user_role_id, user_role_type FROM web_user, user_role WHERE web_user.user_role_id = user_role.user_role_id " +
-//     "ORDER BY web_user_id";
+router.get("/listAllUsers", (req, res) => {
+  const sqlGet =
+    "SELECT web_user_id, user_email, user_password, image, membership_fee, birthday, " +
+    "web_user.user_role_id, role_type FROM web_user, user_role WHERE web_user.user_role_id = user_role.user_role_id " +
+    "ORDER BY web_user_id";
 
-//   db.query(sqlGet, (req, result) => {
-//     if (result) {
-//       for (let i = 0; i < result.length; i++) {
-//         result[i] = DbMods.formatWebUser(result[i]);
-//       }
+  db.query(sqlGet, (req, result) => {
+    if (result) {
+      for (let i = 0; i < result.length; i++) {
+        result[i] = DbMods.formatWebUser(result[i]);
+      }
 
-//       res.send(result);
-//     } else {
-//       const errMsg = {
-//         err:
-//           "Exception thrown trying to extract data from result set: " +
-//           req.sqlMessage,
-//       };
+      res.send(result);
+    } else {
+      const errMsg = {
+        err:
+          "Exception thrown trying to extract data from result set: " +
+          req.sqlMessage,
+      };
 
-//       console.log(errMsg);
-//       res.send(errMsg);
-//     }
-//   });
-// });
+      console.log(errMsg);
+      res.send(errMsg);
+    }
+  });
+});
   
 //Router to GET specific user by ID
 router.get('/getUser/:id', (req, res) => {
