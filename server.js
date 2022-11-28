@@ -17,8 +17,6 @@ app.get("/", (req, res) => {
     console.log("Homepage");
     res.send("web user crud");
   }
-
-  res.send("Hello from backend");
   
 });
 
